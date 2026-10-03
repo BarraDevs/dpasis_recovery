@@ -8,6 +8,7 @@ import { ExternalApisModule } from './app/external-apis/external-apis.module';
 import { FaqModule } from './app/global/faq/faq.module';
 import { GlobalModule } from './app/global/global.module';
 import { HonorificModule } from './app/global/honorific/honorific.module';
+import { ProductModule } from './app/product/product.module';
 import { ProviderModuleModule } from './app/provider/provider-module.module';
 import { ResaleModuleModule } from './app/resale/resale-module.module';
 import { SellerModule } from './app/seller/seller.module';
@@ -40,6 +41,7 @@ import { CashFlowEntryModule } from './app/cash-flow-entry/cash-flow-entry.modul
     ExternalApisModule,
     FaqModule,
     HonorificModule,
+    ProductModule,
     ProviderModuleModule,
     GlobalModule,
     ServiceModuleModule,

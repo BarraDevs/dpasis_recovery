@@ -1,0 +1,31 @@
+export class ProductDto {
+  id: number;
+  code: string;
+  group1: string | null;
+  group2: string | null;
+  description: string;
+  complement: string | null;
+  manufacturerCode: string | null;
+  unitOfMeasure: string;
+  ncm: string;
+  brand: string | null;
+  economicLot: number | null;
+  minStock: number;
+  maxStock: number | null;
+  warrantyDays: number | null;
+  weightInGrams: number | null;
+  heightInCm: number | null;
+  lengthInCm: number | null;
+  widthInCm: number | null;
+  markup: number | null;
+  marginB: number | null;
+  currency: string;
+  quotation: number | null;
+  unitCostInCents: number;
+  unitPriceInCents: number;
+  ean: string | null;
+  additionalInfo: string | null;
+  active: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}

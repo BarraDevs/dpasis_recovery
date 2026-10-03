@@ -161,6 +161,9 @@ export const Claim = {
   HONORIFIC_READ: { subject: ClaimSubject.Honorific, action: ClaimAction.Read },
   HONORIFIC_WRITE: { subject: ClaimSubject.Honorific, action: ClaimAction.Write },
 
+  PRODUCT_READ: { subject: ClaimSubject.Product, action: ClaimAction.Read },
+  PRODUCT_WRITE: { subject: ClaimSubject.Product, action: ClaimAction.Write },
+
   SERVICE_ATTENDANCE_VALUE_READ: { subject: ClaimSubject.ServiceAttendanceValue, action: ClaimAction.Read },
   SERVICE_ATTENDANCE_VALUE_WRITE: { subject: ClaimSubject.ServiceAttendanceValue, action: ClaimAction.Write },
 
