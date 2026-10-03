@@ -12,4 +12,5 @@ export class AccountDto {
 export class AccountWithSensitiveDataDto extends AccountDto {
   password: string;
   passwordResetToken: string | null;
+  passwordResetTokenExpiresAt: Date | null;
 }

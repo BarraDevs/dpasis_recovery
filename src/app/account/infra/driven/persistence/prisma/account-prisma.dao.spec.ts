@@ -58,6 +58,7 @@ describe('AccountDaoAdapterPrisma - Integration tests', () => {
         email: 'jhondoe@email.com',
         password: 'hashedpassword',
         passwordResetToken: null,
+        passwordResetTokenExpiresAt: null,
         role: AccountRole.ADMIN,
         status: AccountStatus.ACTIVE,
       });
@@ -83,6 +84,7 @@ describe('AccountDaoAdapterPrisma - Integration tests', () => {
         email: 'jhondoe@email.com',
         password: 'hashedpassword',
         passwordResetToken: null,
+        passwordResetTokenExpiresAt: null,
         role: AccountRole.ADMIN,
         status: AccountStatus.ACTIVE,
       });
@@ -118,6 +120,7 @@ describe('AccountDaoAdapterPrisma - Integration tests', () => {
         email: 'jhondoe@email.com',
         password: 'hashedpassword',
         passwordResetToken: null,
+        passwordResetTokenExpiresAt: null,
         role: AccountRole.ADMIN,
         status: AccountStatus.ACTIVE,
       });
@@ -158,7 +161,7 @@ describe('AccountDaoAdapterPrisma - Integration tests', () => {
   });
 
   describe('forgotPassword', () => {
-    it('should update passwordResetToken', async() => {
+    it('should update passwordResetToken and its expiration', async() => {
       const account = await prisma.account.create({
         data: {
           name: 'Jhon Doe',
@@ -170,25 +173,28 @@ describe('AccountDaoAdapterPrisma - Integration tests', () => {
       });
 
       const newToken = 'new-reset-token-123';
+      const expiresAt = new Date('2030-01-01T10:00:00.000Z');
 
-      await sut.forgotPassword(account.id, newToken);
+      await sut.forgotPassword(account.id, newToken, expiresAt);
 
       const updated = await prisma.account.findUnique({
         where: { id: account.id },
       });
       expect(updated?.passwordResetToken).toBe(newToken);
+      expect(updated?.passwordResetTokenExpiresAt).toEqual(expiresAt);
       expect(updated?.password).toBe('oldpassword');
     });
   });
 
   describe('resetPassword', () => {
-    it('should update password and clear passwordResetToken', async() => {
+    it('should update password and clear passwordResetToken and its expiration', async() => {
       const account = await prisma.account.create({
         data: {
           name: 'Jhon Doe',
           email: 'jhondoe@email.com',
           password: 'oldpassword',
           passwordResetToken: 'reset-token-xyz',
+          passwordResetTokenExpiresAt: new Date('2030-01-01T10:00:00.000Z'),
           status: AccountStatus.ACTIVE,
           role: AccountRole.ADMIN,
         },
@@ -203,6 +209,7 @@ describe('AccountDaoAdapterPrisma - Integration tests', () => {
       });
       expect(updated?.password).toBe(newPassword);
       expect(updated?.passwordResetToken).toBeNull();
+      expect(updated?.passwordResetTokenExpiresAt).toBeNull();
     });
   });
 });

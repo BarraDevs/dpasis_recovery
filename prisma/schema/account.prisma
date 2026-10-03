@@ -1,13 +1,16 @@
 model Account {
-  id                 Int     @id @default(autoincrement())
-  role               String
-  name               String
-  email              String  @unique
-  password           String  @db.Text
-  passwordResetToken String? @db.VarChar(64)
-  status             String
-  profilePicture     String? @db.Text
-  canBeRemoved       Boolean @default(true) // only first admin (from seed) cannot be removed
+  id                          Int       @id @default(autoincrement())
+  role                        String
+  name                        String
+  email                       String    @unique
+  password                    String    @db.Text
+  // SHA-256 (hex) do token enviado por e-mail. O token em claro nunca é gravado.
+  passwordResetToken          String?   @db.VarChar(64)
+  // Sem expiração o token valeria para sempre; `ResetPassword` recusa token vencido.
+  passwordResetTokenExpiresAt DateTime?
+  status                      String
+  profilePicture              String?   @db.Text
+  canBeRemoved                Boolean   @default(true) // only first admin (from seed) cannot be removed
 
   admin  Admin?
   claims AccountClaim[]

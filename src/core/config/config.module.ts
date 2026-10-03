@@ -37,6 +37,15 @@ import { Environment } from './environment.enum';
         SMTP_USERNAME: Joi.string().required(),
         SMTP_PASSWORD: Joi.string().required(),
 
+        // URL da tela do portal que recebe o token (`?email=...&token=...`). Fora de teste é
+        // obrigatória: sem ela o e-mail de "esqueci a senha" sairia com um link quebrado, e isso só
+        // apareceria quando alguém tentasse recuperar a conta. No teste o adapter é o fake.
+        PASSWORD_RESET_URL: Joi.when('NODE_ENV', {
+          is: Environment.Test,
+          then: Joi.string().uri().optional().allow(''),
+          otherwise: Joi.string().uri().required(),
+        }),
+
         REDIS_URL: Joi.string().required(),
 
         QUEUE_DASHBOARD_USERNAME: Joi.string().required(),

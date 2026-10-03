@@ -1,4 +1,5 @@
 const TOKENS = {
+  AccountMailGateway: Symbol.for('AccountMailGateway'),
   AlertGateway: Symbol.for('AlertGateway'),
   AuditLogDao: Symbol.for('AuditLogDao'),
 

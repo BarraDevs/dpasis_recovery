@@ -1,7 +1,11 @@
 import { createMock } from '@golevelup/ts-jest';
 import { Test } from '@nestjs/testing';
+import { AccountRole } from 'src/app/account/domain/enums/account-role.enum';
+import { ForgotPasswordInputDto } from 'src/app/authentication/application/usecases/forgot-password/dtos/forgot-password.dto';
+import { ResetPasswordInputDto } from 'src/app/authentication/application/usecases/reset-password/dtos/reset-password.dto';
 import { SignInWithCredentialAndPasswordInputDto, SignInWithCredentialAndPasswordOutputDto } from 'src/app/authentication/application/usecases/signin-with-credential-and-password/dtos/signin-with-credential-and-password.dto';
 import { AuthenticationModule } from 'src/app/authentication/authentication.module';
+import { SuccessMessage } from 'src/core/dtos/success-message.dto';
 import { AuthenticationController } from './authentication.controller';
 
 describe('AuthenticationController', () => {
@@ -29,31 +33,31 @@ describe('AuthenticationController', () => {
     expect(signinSpy).toHaveBeenCalledWith(body);
   });
 
-  // it('should forgot password only admins', async() => {
-  //   // Arrange
-  //   const body = createMock<ForgotPasswordInputDto>();
-  //   const output = createMock<SuccessMessage>();
-  //   const forgotPasswordSpy = jest.spyOn(sut['forgotPassword'], 'execute').mockResolvedValue(output);
+  it('should forgot password only admins', async() => {
+    // Arrange
+    const body = createMock<ForgotPasswordInputDto>();
+    const output = createMock<SuccessMessage>();
+    const forgotPasswordSpy = jest.spyOn(sut['forgotPassword'], 'execute').mockResolvedValue(output);
 
-  //   // Act
-  //   const result = await sut.forgotPass(body);
+    // Act
+    const result = await sut.forgotPass(body);
 
-  //   // Assert
-  //   expect(result).toEqual(output);
-  //   expect(forgotPasswordSpy).toHaveBeenCalledWith(body, AccountRole.ADMIN);
-  // });
+    // Assert
+    expect(result).toEqual(output);
+    expect(forgotPasswordSpy).toHaveBeenCalledWith(body, AccountRole.ADMIN);
+  });
 
-  // it('should reset password only admins', async() => {
-  //   // Arrange
-  //   const body = createMock<ResetPasswordInputDto>();
-  //   const output = createMock<SuccessMessage>();
-  //   const resetPasswordSpy = jest.spyOn(sut['resetPassword'], 'execute').mockResolvedValue(output);
+  it('should reset password only admins', async() => {
+    // Arrange
+    const body = createMock<ResetPasswordInputDto>();
+    const output = createMock<SuccessMessage>();
+    const resetPasswordSpy = jest.spyOn(sut['resetPassword'], 'execute').mockResolvedValue(output);
 
-  //   // Act
-  //   const result = await sut.resetPass(body);
+    // Act
+    const result = await sut.resetPass(body);
 
-  //   // Assert
-  //   expect(result).toEqual(output);
-  //   expect(resetPasswordSpy).toHaveBeenCalledWith(body, AccountRole.ADMIN);
-  // });
+    // Assert
+    expect(result).toEqual(output);
+    expect(resetPasswordSpy).toHaveBeenCalledWith(body, AccountRole.ADMIN);
+  });
 });

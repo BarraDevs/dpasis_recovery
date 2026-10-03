@@ -1,7 +1,7 @@
 model Nfse {
-  id                        Int       @id @default(autoincrement())
-  companyId                 Int
-  clientId                  Int
+  id                          Int       @id @default(autoincrement())
+  companyId                   Int
+  clientId                    Int
   // Vínculo com a NFM em escalar puro, sem `@relation`: `Nfm.nfseId` já declara a relação 1:1 e uma
   // segunda relação entre os mesmos models exigiria nomear as duas nos dois lados. As duas colunas
   // são escritas na mesma transação (`INfseRepository.reserve`), e é sobre esta que vive o índice
@@ -12,54 +12,54 @@ model Nfse {
   // as duas tabelas — nenhuma das duas linhas poderia ser inserida primeiro sem constraint
   // deferrable. É justamente essa ausência que permite criar a NFS-e e só então atualizar a NFM
   // dentro da mesma transação.
-  nfmId                     Int?
-  rpsNumber                 Int
-  rpsSeries                 String
-  status                    String
-  batchProtocol             String?
-  nfseNumber                String?
-  verificationCode          String?
-  issuedAt                  DateTime?
-  errorMessage              String?
-  canceledAt                DateTime?
-  cancelReasonCode          Int?
-  bankPaymentProvider       String?
-  bankPaymentRequestCode    String?
-  bankPaymentIdempotencyKey String?   @unique
-  bankPaymentRequestedAt    DateTime?
-  bankPaymentErrorMessage   String?
-  bankPaymentFailedAt       DateTime?
+  nfmId                       Int?
+  rpsNumber                   Int
+  rpsSeries                   String
+  status                      String
+  batchProtocol               String?
+  nfseNumber                  String?
+  verificationCode            String?
+  issuedAt                    DateTime?
+  errorMessage                String?
+  canceledAt                  DateTime?
+  cancelReasonCode            Int?
+  bankPaymentProvider         String?
+  bankPaymentRequestCode      String?
+  bankPaymentIdempotencyKey   String?   @unique
+  bankPaymentRequestedAt      DateTime?
+  bankPaymentErrorMessage     String?
+  bankPaymentFailedAt         DateTime?
   // Situação da cobrança confirmada junto ao Inter. `POST /cobrancas` é assíncrono: receber
   // `bankPaymentRequestCode` só diz que a solicitação foi aceita, não que o boleto foi produzido.
-  bankPaymentStatus         String?
-  bankPaymentConfirmedAt    DateTime?
+  bankPaymentStatus           String?
+  bankPaymentConfirmedAt      DateTime?
   // Liquidação da cobrança (pago / cancelado / expirado) depois da confirmação da emissão.
   // `bankPaymentSettledAt` nulo com boleto confirmado significa "ainda em aberto"; preenchido, o
   // status deixou de ser só EMITTED. `bankPaymentNextSettlementAt` agenda a varredura de fallback
   // quando o webhook do Inter não chega.
-  bankPaymentSettledAt          DateTime?
-  bankPaymentNextSettlementAt   DateTime?
+  bankPaymentSettledAt        DateTime?
+  bankPaymentNextSettlementAt DateTime?
   // Retentativa automática do boleto depois de falha transitória do provedor (Inter fora, 5xx, 429).
   // `bankPaymentNextRetryAt` preenchido significa "a varredura tenta de novo a partir dali"; nulo com
   // `bankPaymentFailedAt` preenchido, "a falha exige decisão humana". `bankPaymentRetryCount` conta
   // as rodadas iniciadas pela varredura e só escolhe o degrau da escada.
-  bankPaymentRetryCount     Int       @default(0)
-  bankPaymentNextRetryAt    DateTime?
+  bankPaymentRetryCount       Int       @default(0)
+  bankPaymentNextRetryAt      DateTime?
   // Agendamento da reconciliação com o provedor de NFS-e. `nextReconcileAt` nulo numa nota não
   // terminal significa "consultar na próxima varredura"; numa nota terminal, "não consultar mais".
-  reconcileAttemptCount     Int       @default(0)
-  nextReconcileAt           DateTime?
+  reconcileAttemptCount       Int       @default(0)
+  nextReconcileAt             DateTime?
   // Ressalvas `A*` que o Giss devolve junto com a nota emitida (inscrição paralisada, prazo de
   // conversão vencido). Não impedem a emissão e exigem ação junto à Prefeitura; `providerAlertedAt`
   // marca que a operação já foi avisada, para o alerta não repetir a mesma nota toda janela.
-  providerAlerts            String?
-  providerAlertedAt         DateTime?
-  data                      Json
-  createdAt                 DateTime  @default(now())
-  updatedAt                 DateTime  @updatedAt
+  providerAlerts              String?
+  providerAlertedAt           DateTime?
+  data                        Json
+  createdAt                   DateTime  @default(now())
+  updatedAt                   DateTime  @updatedAt
 
-  nfm            Nfm?
-  cashFlowEntry  CashFlowEntry?
+  nfm           Nfm?
+  cashFlowEntry CashFlowEntry?
 
   @@unique([companyId, rpsSeries, rpsNumber])
   @@index([status, updatedAt])
@@ -116,13 +116,13 @@ model NfseOutbox {
 /// Classificação interna NFM/NFS. Não vai para o Giss: a listagem do provedor só lê esta tabela
 /// para preencher `kind`. Sem linha, a nota volta `kind: null`. Chave igual à do RPS no prestador.
 model NfseClassification {
-  id         Int      @id @default(autoincrement())
-  companyId  Int
-  rpsNumber  Int
-  rpsSeries  String
-  kind       String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        Int      @id @default(autoincrement())
+  companyId Int
+  rpsNumber Int
+  rpsSeries String
+  kind      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([companyId, rpsSeries, rpsNumber])
   @@map("nfse_classifications")

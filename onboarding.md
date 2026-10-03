@@ -556,7 +556,7 @@ Cada uma em `.cursor/skills/<nome>/SKILL.md`. O agente carrega pela `description
 - **[`.cursor/README.md`](.cursor/README.md)** ainda aponta para `.cursor/rules/RULES.md` (inexistente) e omite skills mais novas (`code-reviewer`, `frontend-integration-docs`, `upload-file-flow`). A rule válida é `architecture-dpasis.mdc`.
 - A skill [`prisma-conventions`](.cursor/skills/prisma-conventions/SKILL.md) ainda descreve `db push`. O código e este guia usam `migrate dev` / `migrate deploy`.
 - Não há CI no repositório. Qualidade local: `npm run lint`, `npm test`, `npm run build`.
-- `forgot-password` / `reset-password` no controller de auth estão comentados.
+- `forgot-password` / `reset-password` (`POST /auth/forgot-password` e `/auth/reset-password`, só `ADMIN`) estão ativos. O token é guardado como hash SHA-256 com validade de 60 min e uso único; o e-mail sai pelo gateway `src/infra/account-mail` (SMTP; fake em teste). Exigem a env `PASSWORD_RESET_URL` (URL da tela de redefinição no front) e a migration `20261003130000_account_password_reset_expiry`.
 - HTTPS de produção no `main.ts` está comentado; o Joi ainda exige `SSL_*`.
 - Superfície `SELLER` sem claims estáticas — não exponha rota de vendedor sem preencher `static-claims.ts` e o catálogo.
 

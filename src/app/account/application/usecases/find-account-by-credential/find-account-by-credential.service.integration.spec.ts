@@ -65,6 +65,7 @@ describe('FindAccountByCredential - Integration tests', () => {
       email: account.email,
       password: account.password,
       passwordResetToken: null,
+      passwordResetTokenExpiresAt: null,
       role: account.role as AccountRole,
       status: account.status as AccountStatus,
     });

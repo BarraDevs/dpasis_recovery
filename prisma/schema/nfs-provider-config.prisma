@@ -1,21 +1,21 @@
 model NfsProviderConfig {
-  id                     Int      @id @default(autoincrement())
-  companyId              Int      @unique
-  vendor                 String
-  municipalRegistration  String
-  municipalCodeIbge      String
-  serieRps               String
-  environment            String
-  certFilePath           String
-  certPasswordEnvVar     String
-  vendorConfig           Json
-  simpleNationalOptant   Boolean  @default(false)
-  fiscalIncentive        Boolean  @default(false)
-  issRate                Decimal? @db.Decimal(7, 4)
-  issExigibility         Int      @default(1)
-  municipalTaxCode       String?  @db.VarChar(20)
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  id                    Int      @id @default(autoincrement())
+  companyId             Int      @unique
+  vendor                String
+  municipalRegistration String
+  municipalCodeIbge     String
+  serieRps              String
+  environment           String
+  certFilePath          String
+  certPasswordEnvVar    String
+  vendorConfig          Json
+  simpleNationalOptant  Boolean  @default(false)
+  fiscalIncentive       Boolean  @default(false)
+  issRate               Decimal? @db.Decimal(7, 4)
+  issExigibility        Int      @default(1)
+  municipalTaxCode      String?  @db.VarChar(20)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 

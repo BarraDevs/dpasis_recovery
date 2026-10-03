@@ -83,6 +83,11 @@ export class ConfigService {
     return this.nestConfigService.get<string>('SMTP_PASSWORD')!;
   }
 
+  // password reset
+  get passwordResetUrl(): string {
+    return this.nestConfigService.get<string>('PASSWORD_RESET_URL')!;
+  }
+
   // redis
   get redisUrl(): string {
     return this.nestConfigService.get<string>('REDIS_URL')!;

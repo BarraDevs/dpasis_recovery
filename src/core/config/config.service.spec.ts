@@ -269,6 +269,20 @@ describe('ConfigService', () => {
     });
   });
 
+  describe('password reset properties', () => {
+    describe('passwordResetUrl', () => {
+      it('should return the PASSWORD_RESET_URL value', () => {
+        const mockUrl = 'https://portal.example.com/reset-password';
+        nestConfigService.get.mockReturnValue(mockUrl);
+
+        const result = sut.passwordResetUrl;
+
+        expect(nestConfigService.get).toHaveBeenCalledWith('PASSWORD_RESET_URL');
+        expect(result).toBe(mockUrl);
+      });
+    });
+  });
+
   describe('redis properties', () => {
     describe('redisUrl', () => {
       it('should return the REDIS_URL value', () => {

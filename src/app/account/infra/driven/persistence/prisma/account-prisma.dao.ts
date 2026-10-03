@@ -19,6 +19,7 @@ const AccountWithSensitiveDataSelect = {
   ...AccountSelect,
   password: true,
   passwordResetToken: true,
+  passwordResetTokenExpiresAt: true,
 } satisfies Prisma.AccountSelect;
 
 @Injectable()
@@ -86,10 +87,10 @@ export class AccountDaoAdapterPrisma implements IAccountDao {
       .filter((c): c is ClaimValue => c !== null);
   }
 
-  public async forgotPassword(id: number, passwordResetToken: string): Promise<void> {
+  public async forgotPassword(id: number, passwordResetToken: string, passwordResetTokenExpiresAt: Date): Promise<void> {
     await this.prisma.account.update({
       where: { id },
-      data: { passwordResetToken },
+      data: { passwordResetToken, passwordResetTokenExpiresAt },
     });
   }
 
@@ -99,6 +100,7 @@ export class AccountDaoAdapterPrisma implements IAccountDao {
       data: {
         password,
         passwordResetToken: null,
+        passwordResetTokenExpiresAt: null,
       },
     });
   }

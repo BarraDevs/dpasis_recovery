@@ -7,6 +7,6 @@ export interface IAccountDao {
   findByEmail(email: string): Promise<AccountWithSensitiveDataDto | null>;
   findById(id: number): Promise<AccountDto | null>;
   findClaimsByAccountId(accountId: number): Promise<ClaimValue[]>;
-  forgotPassword(id: number, passwordResetToken: string): Promise<void>;
+  forgotPassword(id: number, passwordResetToken: string, passwordResetTokenExpiresAt: Date): Promise<void>;
   resetPassword(id: number, password: string): Promise<void>;
 }
