@@ -18,6 +18,7 @@ model Seller {
   active            Boolean
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  Order             Order[]
 
   @@map("sellers")
 }

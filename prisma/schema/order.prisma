@@ -1,0 +1,59 @@
+model Order {
+  id   Int    @id @default(autoincrement())
+  code String @unique // Ex: ORC-2024-001
+
+  clientId  Int
+  companyId Int
+  sellerId  Int?
+
+  freightMode         String?
+  carrierName         String? // Nome da transportadora (Texto livre por enquanto)
+  freightValueInCents Int     @default(0)
+  commercialProcess   String?
+  observation         String? @db.Text
+  commercialNote      String? @db.Text
+
+  status            String      @default("QUOTATION")
+  totalItemsInCents Int         @default(0)
+  totalValueInCents Int         @default(0)
+
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items   OrderItem[]
+  client  Client      @relation(fields: [clientId], references: [id])
+  company Company     @relation(fields: [companyId], references: [id])
+  seller  Seller?     @relation(fields: [sellerId], references: [id])
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id      Int @id @default(autoincrement())
+  orderId Int
+
+  type String
+
+  productId Int?
+  serviceId Int?
+
+  code                String
+  description         String
+  serviceActivityCode String?
+
+  quantity          Float
+  unitValueInCents  Int
+  totalValueInCents Int
+
+  lastAdjustment DateTime?
+
+  order   Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product? @relation(fields: [productId], references: [id])
+  service Service? @relation(fields: [serviceId], references: [id]) // <--- Relação ativada!
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("order_items")
+}

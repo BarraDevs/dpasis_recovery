@@ -24,6 +24,7 @@ model Service {
   warranty                Warranty                 @relation(fields: [warrantyId], references: [id])
   serviceAttendanceValues ServiceAttendanceValue[]
   companies               Company[]
+  OrderItem               OrderItem[]
 
   @@map("services")
 }

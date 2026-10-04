@@ -25,5 +25,8 @@ import { ProductAdminController } from './infra/drivers/http/admin/product-admin
     FindProductById,
     UpdateProductStatus,
   ],
+  exports: [
+    FindProductById,
+  ],
 })
 export class ProductModule {}

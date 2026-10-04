@@ -86,6 +86,9 @@ export const Claim = {
   NFM_READ: { subject: ClaimSubject.Nfm, action: ClaimAction.Read },
   NFM_WRITE: { subject: ClaimSubject.Nfm, action: ClaimAction.Write },
 
+  ORDER_READ: { subject: ClaimSubject.Order, action: ClaimAction.Read },
+  ORDER_WRITE: { subject: ClaimSubject.Order, action: ClaimAction.Write },
+
   CARRIER_READ: { subject: ClaimSubject.Carrier, action: ClaimAction.Read },
   CARRIER_WRITE: { subject: ClaimSubject.Carrier, action: ClaimAction.Write },
 

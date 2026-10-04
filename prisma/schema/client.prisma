@@ -39,6 +39,7 @@ model Client {
   invoiceConfig ClientInvoiceConfig?
   discounts     ClientDiscount[]
   types         ClientType[]
+  Order         Order[]
 
   @@map("clients")
 }

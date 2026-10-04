@@ -1,41 +1,42 @@
 model Product {
-  id                 Int      @id @default(autoincrement())
-  code               String   @unique // Código do produto
-  group1             String?
-  group2             String?
-  description        String
-  complement         String?
-  manufacturerCode   String?  // Código fabricante
-  unitOfMeasure      String   // Unidade de medida (ex: UN, KG)
-  ncm                String   // CL.Fiscal/NCM
-  brand              String?  // Marca Fabricante
+  id               Int     @id @default(autoincrement())
+  code             String  @unique // Código do produto
+  group1           String?
+  group2           String?
+  description      String
+  complement       String?
+  manufacturerCode String? // Código fabricante
+  unitOfMeasure    String // Unidade de medida (ex: UN, KG)
+  ncm              String // CL.Fiscal/NCM
+  brand            String? // Marca Fabricante
 
   // Estoque e Logística
-  economicLot        Float?   // Lote econômico
-  minStock           Float    @default(0)
-  maxStock           Float?
-  warrantyDays       Int?     // Prazo Garantia (Dias)
-  weightInGrams      Float?   // Peso em Gramas
-  heightInCm         Float?   // Altura em Centímetros
-  lengthInCm         Float?   // Comprimento em Centímetros
-  widthInCm          Float?   // Largura em Centímetros
+  economicLot   Float? // Lote econômico
+  minStock      Float  @default(0)
+  maxStock      Float?
+  warrantyDays  Int? // Prazo Garantia (Dias)
+  weightInGrams Float? // Peso em Gramas
+  heightInCm    Float? // Altura em Centímetros
+  lengthInCm    Float? // Comprimento em Centímetros
+  widthInCm     Float? // Largura em Centímetros
 
   // Precificação e Financeiro
-  markup             Float?
-  marginB            Float?
-  currency           String   @default("BRL") // Moeda
-  quotation          Float?   // Cotação
-  unitCostInCents    Int      // Custo Unitário (em centavos)
-  unitPriceInCents   Int      // Preço Unitário (em centavos)
+  markup           Float?
+  marginB          Float?
+  currency         String @default("BRL") // Moeda
+  quotation        Float? // Cotação
+  unitCostInCents  Int // Custo Unitário (em centavos)
+  unitPriceInCents Int // Preço Unitário (em centavos)
 
   // Identificação e Extras
-  ean                String?  // Código de barras EAN
-  additionalInfo     String?  @db.Text
+  ean            String? // Código de barras EAN
+  additionalInfo String? @db.Text
 
   // Controle de sistema
-  active             Boolean  @default(true)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  active    Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  OrderItem OrderItem[]
 
   @@map("products")
 }

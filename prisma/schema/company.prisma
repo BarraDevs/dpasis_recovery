@@ -28,6 +28,7 @@ model Company {
   cashFlowEntries CashFlowEntry[]
 
   nfsProviderConfig NfsProviderConfig?
+  Order             Order[]
 
   @@map("companies")
 }
